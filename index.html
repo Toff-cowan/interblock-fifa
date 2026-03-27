@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Championship — Official Points Structure</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #F0C040;
+  --gold-light: #FFE080;
+  --gold-dim: #9A7A10;
+  --silver: #B8C4D0;
+  --bg: #06090F;
+  --surface: #0C1220;
+  --surface2: #111B2E;
+  --surface3: #18253D;
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.14);
+  --text: #DCE6F5;
+  --muted: #5A6B88;
+  --onca: #7B3FA8;
+  --genus: #B85C0A;
+  --pardus: #1B5E20;
+  --lynx: #E8C830;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Barlow',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,0.018) 59px,rgba(255,255,255,0.018) 60px),
+    repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,0.009) 59px,rgba(255,255,255,0.009) 60px);
+  pointer-events:none;
+  z-index:0;
+}
+.wrap { position:relative; z-index:1; max-width:1160px; margin:0 auto; padding:0 20px 100px; }
+
+/* HERO */
+.hero { text-align:center; padding:72px 0 56px; position:relative; }
+.hero-glow {
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:800px; height:500px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(240,192,64,0.11) 0%,transparent 65%);
+  pointer-events:none;
+}
+.trophy { font-size:64px; display:block; margin-bottom:20px; animation:levitate 4s ease-in-out infinite; filter:drop-shadow(0 0 30px rgba(240,192,64,0.6)); }
+@keyframes levitate { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:600; letter-spacing:8px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+.hero-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(60px,11vw,120px);
+  line-height:0.88; letter-spacing:4px;
+  background:linear-gradient(160deg,#ffffff 0%,var(--gold-light) 40%,var(--gold) 70%,#c8860a 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:22px;
+}
+.hero-sub { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:300; letter-spacing:5px; text-transform:uppercase; color:var(--muted); }
+
+.rule { display:flex; align-items:center; gap:14px; margin:52px 0; }
+.rule-line { flex:1; height:1px; background:var(--border-bright); }
+.rule-pip { width:7px; height:7px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+
+.s-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:6px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.s-title { font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:3px; color:var(--gold); margin-bottom:32px; }
+
+/* BLOCKS */
+.blocks-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px; }
+@media(max-width:720px){ .blocks-row{grid-template-columns:repeat(2,1fr);} }
+
+.block-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:transform 0.25s,box-shadow 0.25s; }
+.block-card:hover { transform:translateY(-5px); box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+.block-stripe { height:4px; width:100%; }
+.block-card.onca   .block-stripe { background:var(--onca);   box-shadow:0 0 20px var(--onca); }
+.block-card.genus  .block-stripe { background:var(--genus);  box-shadow:0 0 20px var(--genus); }
+.block-card.pardus .block-stripe { background:var(--pardus); box-shadow:0 0 20px var(--pardus); }
+.block-card.lynx   .block-stripe { background:var(--lynx);   box-shadow:0 0 20px var(--lynx); }
+.block-inner { padding:22px 20px 24px; }
+.block-name { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:3px; margin-bottom:6px; }
+.block-card.onca   .block-name { color:var(--onca); }
+.block-card.genus  .block-name { color:var(--genus); }
+.block-card.pardus .block-name { color:var(--pardus); }
+.block-card.lynx   .block-name { color:var(--lynx); }
+.block-desc { font-size:12px; color:var(--muted); font-weight:300; line-height:1.5; margin-bottom:16px; }
+.block-members { display:flex; flex-direction:column; gap:6px; }
+.member-row { display:flex; align-items:center; gap:10px; padding:7px 10px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); font-size:12px; font-family:'Barlow Condensed',sans-serif; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
+.member-num { font-family:'Bebas Neue',sans-serif; font-size:16px; opacity:0.35; min-width:16px; }
+.member-group-tag { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:2px; padding:2px 7px; border-radius:4px; background:var(--surface3); color:var(--muted); }
+
+/* GROUPS */
+.groups-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:16px; }
+@media(max-width:640px){ .groups-grid{grid-template-columns:1fr;} }
+.group-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.group-header { padding:16px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--border); background:var(--surface2); }
+.group-letter { font-family:'Bebas Neue',sans-serif; font-size:42px; line-height:1; color:var(--gold); opacity:0.9; }
+.group-label-top { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); }
+.group-label-bot { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:var(--text); }
+.group-table { width:100%; border-collapse:collapse; }
+.group-table thead tr { background:rgba(0,0,0,0.2); }
+.group-table th { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted); padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); }
+.group-table th:not(:first-child) { text-align:center; }
+.group-table td { padding:12px 14px; font-size:13px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.group-table tr:last-child td { border-bottom:none; }
+.group-table td:not(:first-child) { text-align:center; }
+.player-cell { display:flex; align-items:center; gap:10px; }
+.player-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.player-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:0.5px; }
+.player-block-tag { font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; opacity:0.5; font-family:'Barlow Condensed',sans-serif; }
+.advance-badge { display:inline-block; font-size:9px; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:3px 8px; border-radius:4px; }
+.badge-1st { background:rgba(240,192,64,0.2); color:var(--gold); border:1px solid rgba(240,192,64,0.4); }
+.badge-2nd { background:rgba(184,196,208,0.12); color:var(--silver); border:1px solid rgba(184,196,208,0.3); }
+.badge-out { background:rgba(255,255,255,0.04); color:var(--muted); border:1px solid var(--border); }
+
+/* POINTS */
+.points-hero { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:16px; }
+.points-hero-header { background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%); padding:28px 32px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.points-hero-title { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:3px; color:var(--gold); }
+.max-badge { background:linear-gradient(135deg,rgba(240,192,64,0.2),rgba(240,192,64,0.08)); border:1px solid rgba(240,192,64,0.35); border-radius:10px; padding:10px 20px; text-align:center; }
+.max-badge-label { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold-dim); display:block; }
+.max-badge-num { font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1; color:var(--gold); display:block; }
+.max-badge-sub { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:2px; color:var(--gold-dim); display:block; }
+.stages-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+@media(max-width:760px){ .stages-grid{grid-template-columns:repeat(2,1fr);} }
+.stage-col { padding:24px 20px; border-right:1px solid var(--border); }
+.stage-col:last-child { border-right:none; }
+.stage-num { font-family:'Barlow Condensed',sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.stage-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--text); }
+.stage-icon { font-size:20px; margin-bottom:8px; display:block; margin-top:4px; }
+.pts-rows { display:flex; flex-direction:column; gap:10px; }
+.pts-row { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); gap:8px; }
+.pts-row.winner-row { background:linear-gradient(135deg,rgba(240,192,64,0.12),rgba(240,192,64,0.04)); border-color:rgba(240,192,64,0.25); }
+.pts-label { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.5px; color:var(--text); display:flex; align-items:center; gap:6px; }
+.pts-label .emoji { font-size:14px; }
+.pts-value { font-family:'Bebas Neue',sans-serif; font-size:26px; line-height:1; color:var(--gold); flex-shrink:0; }
+.pts-row:not(.winner-row) .pts-value { color:var(--silver); font-size:22px; }
+.stage-note { margin-top:12px; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Barlow Condensed',sans-serif; font-size:11px; color:var(--muted); letter-spacing:1px; line-height:1.5; }
+
+/* CHAMPION PATH */
+.path-card { background:var(--surface); border:1px solid rgba(240,192,64,0.2); border-radius:16px; overflow:hidden; margin-bottom:16px; box-shadow:0 0 60px rgba(240,192,64,0.06); }
+.path-header { background:linear-gradient(135deg,rgba(240,192,64,0.15),rgba(240,192,64,0.04)); padding:24px 28px; border-bottom:1px solid rgba(240,192,64,0.15); display:flex; align-items:center; gap:16px; }
+.path-trophy { font-size:32px; }
+.path-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:3px; color:var(--gold); }
+.path-subtitle { font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--gold-dim); }
+.path-steps { display:flex; align-items:stretch; padding:28px; gap:0; flex-wrap:wrap; }
+@media(max-width:600px){ .path-steps{flex-direction:column;} }
+.path-step { flex:1; text-align:center; padding:20px 14px; min-width:100px; }
+.path-step-icon { font-size:24px; margin-bottom:8px; display:block; }
+.path-step-stage { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.path-step-pts { font-family:'Bebas Neue',sans-serif; font-size:44px; line-height:1; color:var(--gold); display:block; }
+.path-step-label { font-family:'Barlow Condensed',sans-serif; font-size:11px; letter-spacing:1px; color:var(--muted); margin-top:2px; }
+.path-arrow { display:flex; align-items:center; color:var(--gold); opacity:0.4; font-size:22px; padding:0 4px; flex-shrink:0; align-self:center; }
+.path-total { display:flex; align-items:center; justify-content:center; gap:14px; padding:20px 28px; background:linear-gradient(135deg,rgba(240,192,64,0.1),rgba(240,192,64,0.03)); border-top:1px solid rgba(240,192,64,0.15); }
+.path-total-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--gold-dim); }
+.path-total-num { font-family:'Bebas Neue',sans-serif; font-size:52px; line-height:1; color:var(--gold); filter:drop-shadow(0 0 12px rgba(240,192,64,0.4)); }
+.path-total-pts { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:300; letter-spacing:4px; text-transform:uppercase; color:var(--gold-dim); align-self:flex-end; padding-bottom:6px; }
+
+/* TABLE */
+.summary-table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.summary-table { width:100%; border-collapse:collapse; }
+.summary-table thead tr { background:var(--surface2); }
+.summary-table th { font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--muted); padding:14px 16px; text-align:left; border-bottom:1px solid var(--border-bright); }
+.summary-table th:not(:first-child):not(:nth-child(2)) { text-align:center; }
+.summary-table th:last-child { text-align:right; }
+.summary-table td { padding:13px 16px; font-size:14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.summary-table tr:last-child td { border-bottom:none; }
+.summary-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
+.summary-table td:last-child { text-align:right; }
+.stage-cell { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.5px; }
+.result-win { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--gold); }
+.result-lose { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--silver); }
+.result-na { color:var(--muted); font-size:16px; }
+.running-total { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--text); }
+.highlight-row td { background:rgba(240,192,64,0.05); }
+
+/* FOOTER */
+.key-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px 28px; display:flex; gap:20px; align-items:flex-start; }
+.key-body { font-family:'Barlow',sans-serif; font-size:13px; color:var(--muted); line-height:1.9; }
+.key-body strong { color:var(--text); }
+.footer { text-align:center; padding-top:48px; font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); opacity:0.6; }
+
+/* ANIMATE */
+.fade-up { opacity:0; transform:translateY(24px); animation:fadeUp 0.6s ease forwards; }
+@keyframes fadeUp { to{opacity:1;transform:translateY(0)} }
+.d1{animation-delay:0.1s} .d2{animation-delay:0.2s} .d3{animation-delay:0.3s}
+.d4{animation-delay:0.4s} .d5{animation-delay:0.5s} .d6{animation-delay:0.6s} .d7{animation-delay:0.7s}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <span class="trophy">🏆</span>
+    <div class="eyebrow">Official Competition Framework</div>
+    <div class="hero-title">BLOCK<br>CHAMPIONSHIP</div>
+    <div class="hero-sub">4 Blocks · 4 Groups · 16 Competitors</div>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- BLOCKS -->
+  <div class="fade-up d1">
+    <div class="s-label">Blocks</div>
+  </div>
+
+  <div class="blocks-row fade-up d2">
+    <div class="block-card onca">
+      <div class="block-stripe"></div>
+      <div class="block-inner">
+        <div class="block-name">ONCA</div>
+        <div class="block-desc">4 representatives — one per group</div>
+        <div class="block-members">
+          <div class="member-row"><span class="member-num">01</span> Onca Rep. <span class="member-group-tag">Group A</span></div>
+          <div class="member-row"><span class="member-num">02</span> Onca Rep. <span class="member-group-tag">Group B</span></div>
+          <div class="member-row"><span class="member-num">03</span> Onca Rep. <span class="member-group-tag">Group C</span></div>
+          <div class="member-row"><span class="member-num">04</span> Onca Rep. <span class="member-group-tag">Group D</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-card genus">
+      <div class="block-stripe"></div>
+      <div class="block-inner">
+        <div class="block-name">GENUS</div>
+        <div class="block-desc">4 representatives — one per group</div>
+        <div class="block-members">
+          <div class="member-row"><span class="member-num">01</span> Genus Rep. <span class="member-group-tag">Group A</span></div>
+          <div class="member-row"><span class="member-num">02</span> Genus Rep. <span class="member-group-tag">Group B</span></div>
+          <div class="member-row"><span class="member-num">03</span> Genus Rep. <span class="member-group-tag">Group C</span></div>
+          <div class="member-row"><span class="member-num">04</span> Genus Rep. <span class="member-group-tag">Group D</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-card pardus">
+      <div class="block-stripe"></div>
+      <div class="block-inner">
+        <div class="block-name">PARDUS</div>
+        <div class="block-desc">4 representatives — one per group</div>
+        <div class="block-members">
+          <div class="member-row"><span class="member-num">01</span> Pardus Rep. <span class="member-group-tag">Group A</span></div>
+          <div class="member-row"><span class="member-num">02</span> Pardus Rep. <span class="member-group-tag">Group B</span></div>
+          <div class="member-row"><span class="member-num">03</span> Pardus Rep. <span class="member-group-tag">Group C</span></div>
+          <div class="member-row"><span class="member-num">04</span> Pardus Rep. <span class="member-group-tag">Group D</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="block-card lynx">
+      <div class="block-stripe"></div>
+      <div class="block-inner">
+        <div class="block-name">LYNX</div>
+        <div class="block-desc">4 representatives — one per group</div>
+        <div class="block-members">
+          <div class="member-row"><span class="member-num">01</span> Lynx Rep. <span class="member-group-tag">Group A</span></div>
+          <div class="member-row"><span class="member-num">02</span> Lynx Rep. <span class="member-group-tag">Group B</span></div>
+          <div class="member-row"><span class="member-num">03</span> Lynx Rep. <span class="member-group-tag">Group C</span></div>
+          <div class="member-row"><span class="member-num">04</span> Lynx Rep. <span class="member-group-tag">Group D</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- GROUPS -->
+  <div class="fade-up d2">
+    <div class="s-label">Initial Round — 4 Players per Group, Top 2 Advance</div>
+    <div class="s-title">GROUP STAGE</div>
+  </div>
+
+  <div class="groups-grid fade-up d3">
+
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-letter">A</div>
+        <div><div class="group-label-top">Initial Round</div><div class="group-label-bot">Group A</div></div>
+      </div>
+      <table class="group-table">
+        <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+            <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
+            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+            <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
+            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+            <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+            <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-letter">B</div>
+        <div><div class="group-label-top">Initial Round</div><div class="group-label-bot">Group B</div></div>
+      </div>
+      <table class="group-table">
+        <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+            <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
+            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+            <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
+            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+            <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+            <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-letter">C</div>
+        <div><div class="group-label-top">Initial Round</div><div class="group-label-bot">Group C</div></div>
+      </div>
+      <table class="group-table">
+        <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+            <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
+            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+            <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
+            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+            <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+            <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-letter">D</div>
+        <div><div class="group-label-top">Initial Round</div><div class="group-label-bot">Group D</div></div>
+      </div>
+      <table class="group-table">
+        <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+            <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
+            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+            <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
+            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+            <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+          <tr>
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+            <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
+            <td><span class="advance-badge badge-out">Eliminated</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- POINTS -->
+  <div class="fade-up d3">
+    <div class="s-label">Official Scoring System</div>
+    <div class="s-title">POINTS STRUCTURE</div>
+  </div>
+
+  <div class="points-hero fade-up d4">
+    <div class="points-hero-header">
+      <div>
+        <div class="points-hero-title">STAGE-BY-STAGE BREAKDOWN</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">Points awarded per outcome at each stage</div>
+      </div>
+      <div class="max-badge">
+        <span class="max-badge-label">Block Maximum</span>
+        <span class="max-badge-num">32</span>
+        <span class="max-badge-sub">Points Possible</span>
+      </div>
+    </div>
+
+    <div class="stages-grid">
+
+      <div class="stage-col">
+        <span class="stage-icon">🏟️</span>
+        <div class="stage-num">Stage 01</div>
+        <div class="stage-name">GROUP STAGE</div>
+        <div class="stage-icon"></div>
+        <div class="pts-rows" style="margin-top:16px;">
+          <div class="pts-row winner-row">
+            <div class="pts-label"><span class="emoji">🥇</span> Group Winner</div>
+            <div class="pts-value">6</div>
+          </div>
+          <div class="pts-row">
+            <div class="pts-label"><span class="emoji">🥈</span> Runner-Up</div>
+            <div class="pts-value">2</div>
+          </div>
+          <div class="pts-row" style="opacity:0.4">
+            <div class="pts-label"><span class="emoji">❌</span> 3rd / 4th</div>
+            <div class="pts-value" style="color:var(--muted);font-size:18px;">0</div>
+          </div>
+        </div>
+        <div class="stage-note" style="margin-top:12px;">Top 2 from each group advance. Winner earns <span style="color:var(--gold)">6 pts</span>, runner-up earns <span style="color:var(--silver)">2 pts</span>.</div>
+      </div>
+
+      <div class="stage-col">
+        <span class="stage-icon">⚔️</span>
+        <div class="stage-num">Stage 02</div>
+        <div class="stage-name">QUARTER-FINALS</div>
+        <div class="pts-rows" style="margin-top:16px;">
+          <div class="pts-row winner-row">
+            <div class="pts-label"><span class="emoji">✅</span> QF Win</div>
+            <div class="pts-value">8</div>
+          </div>
+          <div class="pts-row">
+            <div class="pts-label"><span class="emoji">🔰</span> QF Loss</div>
+            <div class="pts-value">4</div>
+          </div>
+        </div>
+        <div class="stage-note" style="margin-top:12px;">All 8 QF entrants earn <span style="color:var(--silver)">4 pts</span> for reaching this stage. Winners earn <span style="color:var(--gold)">8 pts</span> total.</div>
+      </div>
+
+      <div class="stage-col">
+        <span class="stage-icon">🔥</span>
+        <div class="stage-num">Stage 03</div>
+        <div class="stage-name">SEMI-FINALS</div>
+        <div class="pts-rows" style="margin-top:16px;">
+          <div class="pts-row winner-row">
+            <div class="pts-label"><span class="emoji">✅</span> SF Win</div>
+            <div class="pts-value">10</div>
+          </div>
+          <div class="pts-row">
+            <div class="pts-label"><span class="emoji">🔰</span> SF Loss</div>
+            <div class="pts-value">6</div>
+          </div>
+        </div>
+        <div class="stage-note" style="margin-top:12px;">All 4 semi-finalists earn <span style="color:var(--silver)">6 pts</span>. SF winners earn <span style="color:var(--gold)">10 pts</span> total.</div>
+      </div>
+
+      <div class="stage-col">
+        <span class="stage-icon">🏆</span>
+        <div class="stage-num">Stage 04</div>
+        <div class="stage-name">THE FINAL</div>
+        <div class="pts-rows" style="margin-top:16px;">
+          <div class="pts-row winner-row">
+            <div class="pts-label"><span class="emoji">👑</span> Champion</div>
+            <div class="pts-value">8</div>
+          </div>
+          <div class="pts-row">
+            <div class="pts-label"><span class="emoji">🥈</span> Runner-Up</div>
+            <div class="pts-value">6</div>
+          </div>
+        </div>
+        <div class="stage-note" style="margin-top:12px;">Champion earns <span style="color:var(--gold)">8 pts</span>. Runner-up earns <span style="color:var(--silver)">6 pts</span>. Both are rewarded.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- CHAMPION PATH -->
+  <div class="fade-up d5">
+    <div class="s-label">Maximum Points Scenario</div>
+    <div class="s-title">THE CHAMPION'S PATH</div>
+  </div>
+
+  <div class="path-card fade-up d5">
+    <div class="path-header">
+      <span class="path-trophy">🏆</span>
+      <div>
+        <div class="path-title">PERFECT RUN — 32 POINTS</div>
+        <div class="path-subtitle">The only path to a block's maximum score · One individual carries the block</div>
+      </div>
+    </div>
+    <div class="path-steps">
+      <div class="path-step">
+        <span class="path-step-icon">🏟️</span>
+        <div class="path-step-stage">Group Stage</div>
+        <span class="path-step-pts">6</span>
+        <div class="path-step-label">Win Group</div>
+      </div>
+      <div class="path-arrow">›</div>
+      <div class="path-step">
+        <span class="path-step-icon">⚔️</span>
+        <div class="path-step-stage">Quarter-Final</div>
+        <span class="path-step-pts">8</span>
+        <div class="path-step-label">Win QF</div>
+      </div>
+      <div class="path-arrow">›</div>
+      <div class="path-step">
+        <span class="path-step-icon">🔥</span>
+        <div class="path-step-stage">Semi-Final</div>
+        <span class="path-step-pts">10</span>
+        <div class="path-step-label">Win SF</div>
+      </div>
+      <div class="path-arrow">›</div>
+      <div class="path-step">
+        <span class="path-step-icon">👑</span>
+        <div class="path-step-stage">The Final</div>
+        <span class="path-step-pts">8</span>
+        <div class="path-step-label">Champion</div>
+      </div>
+    </div>
+    <div class="path-total">
+      <div class="path-total-label">Block Total</div>
+      <div class="path-total-num">32</div>
+      <div class="path-total-pts">pts</div>
+    </div>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- OUTCOMES TABLE -->
+  <div class="fade-up d6">
+    <div class="s-label">All Possible Outcomes for a Single Representative</div>
+    <div class="s-title">POINTS REFERENCE TABLE</div>
+  </div>
+
+  <div class="summary-table-wrap fade-up d6">
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Exit Stage</th>
+          <th>Group</th>
+          <th>QF</th>
+          <th>SF</th>
+          <th>Final</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stage-cell">❌ Eliminated in Group (3rd/4th)</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Group Stage</td>
+          <td><span class="result-lose" style="color:var(--muted);">0</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="running-total">0</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥈 Group 2nd → Lose QF</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Quarter-Final</td>
+          <td><span class="result-lose">2</span></td>
+          <td><span class="result-lose">4</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="running-total">6</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥇 Group 1st → Lose QF</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Quarter-Final</td>
+          <td><span class="result-win">6</span></td>
+          <td><span class="result-lose">4</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="running-total">10</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥈 Group 2nd → Win QF → Lose SF</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Semi-Final</td>
+          <td><span class="result-lose">2</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span class="result-lose">6</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="running-total">16</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥇 Group 1st → Win QF → Lose SF</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">Semi-Final</td>
+          <td><span class="result-win">6</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span class="result-lose">6</span></td>
+          <td><span class="result-na">—</span></td>
+          <td><span class="running-total">20</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥈 Group 2nd → Win QF → Win SF → Lose Final</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">The Final</td>
+          <td><span class="result-lose">2</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span class="result-win">10</span></td>
+          <td><span class="result-lose">6</span></td>
+          <td><span class="running-total">26</span></td>
+        </tr>
+        <tr>
+          <td class="stage-cell">🥇 Group 1st → Win QF → Win SF → Lose Final</td>
+          <td style="font-family:'Barlow Condensed',sans-serif;color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;">The Final</td>
+          <td><span class="result-win">6</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span class="result-win">10</span></td>
+          <td><span class="result-lose">6</span></td>
+          <td><span class="running-total">30</span></td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="stage-cell" style="color:var(--gold);">👑 Group 1st → Win QF → Win SF → CHAMPION</td>
+          <td style="font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:15px;letter-spacing:2px;">CHAMPION</td>
+          <td><span class="result-win">6</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span class="result-win">10</span></td>
+          <td><span class="result-win">8</span></td>
+          <td><span style="font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);filter:drop-shadow(0 0 8px rgba(240,192,64,0.5));">32</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- KEY RULES -->
+  <div class="key-card fade-up d7">
+    <span style="font-size:28px;flex-shrink:0;">📋</span>
+    <div class="key-body">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;">KEY RULES SUMMARY</div>
+      • Each block has <strong>4 representatives</strong> — one placed in each group. Blocks accumulate points from all representatives simultaneously.<br>
+      • <strong>2 players advance</strong> from each group — 1st place earns <strong>6 pts</strong>, 2nd place earns <strong>2 pts</strong>. Eliminated players (3rd/4th) earn nothing.<br>
+      • At the <strong>Quarter-Finals</strong>, all 8 entrants earn 4 pts for reaching the stage. Winners earn 8 pts total.<br>
+      • At the <strong>Semi-Finals</strong>, all 4 entrants earn 6 pts. Winners earn 10 pts total.<br>
+      • In <strong>The Final</strong>, the champion earns 8 pts and the runner-up earns 6 pts.<br>
+      • The <strong>maximum of 32 points</strong> is earned only when one representative wins their group <em>and</em> wins the entire championship.
+    </div>
+  </div>
+
+  <div class="footer">Block Championship · Official Scoring Document</div>
+
+</div>
+</body>
+</html>
