@@ -185,6 +185,29 @@ body::before {
 .key-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px 28px; display:flex; gap:20px; align-items:flex-start; }
 .key-body { font-family:'Barlow',sans-serif; font-size:13px; color:var(--muted); line-height:1.9; }
 .key-body strong { color:var(--text); }
+.banned-notice {
+  margin-top:20px;
+  padding:22px 28px;
+  border-radius:14px;
+  border:2px solid rgba(240,192,64,0.45);
+  background:linear-gradient(135deg,rgba(240,192,64,0.12),rgba(240,192,64,0.04));
+  box-shadow:0 0 40px rgba(240,192,64,0.08);
+  text-align:center;
+}
+.banned-notice-title {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(22px,4vw,30px);
+  letter-spacing:3px;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+.banned-notice-body {
+  font-family:'Barlow',sans-serif;
+  font-size:clamp(15px,2.4vw,17px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.65;
+}
 .footer { text-align:center; padding-top:48px; font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); opacity:0.6; }
 
 /* ANIMATE */
@@ -670,6 +693,14 @@ body::before {
       • At the <strong>Semi-Finals</strong>, all 4 entrants earn 6 pts. Winners earn 10 pts total.<br>
       • In <strong>The Final</strong>, the champion earns 8 pts and the runner-up earns 6 pts.<br>
       • The <strong>maximum of 32 points</strong> is earned only when one representative wins their group <em>and</em> wins the entire championship.
+    </div>
+  </div>
+
+  <div class="banned-notice fade-up d7">
+    <div class="banned-notice-title">BANNED TEAMS &amp; SQUADS</div>
+    <div class="banned-notice-body">
+      <strong>PSG</strong> and <strong>Real Madrid</strong><br>
+      <strong>No classic XI’s or all-star teams.</strong>
     </div>
   </div>
 
