@@ -879,9 +879,9 @@ class ParticipantManager {
                 <div style="font-size:12px; color:var(--muted);">${player1.block.toUpperCase()}</div>
               </div>
               <div style="display:flex; gap:8px; align-items:center;">
-                <input type="number" id="${match.id}-p1" min="0" value="${match.player1Score}" onchange="participantManager.updateMatchScore('${match.id}', this.value, document.getElementById('${match.id}-p2').value)" style="width:50px; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                <input type="number" id="${match.id}-p1" min="0" value="${match.player1Score}" disabled style="width:50px; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
                 <span style="color:var(--muted); font-weight:600; min-width:30px; text-align:center;">vs</span>
-                <input type="number" id="${match.id}-p2" min="0" value="${match.player2Score}" onchange="participantManager.updateMatchScore('${match.id}', document.getElementById('${match.id}-p1').value, this.value)" style="width:50px; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                <input type="number" id="${match.id}-p2" min="0" value="${match.player2Score}" disabled style="width:50px; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
               </div>
               <div style="flex:1;">
                 <div style="color:${color2}; font-weight:600; margin-bottom:4px;">${player2.name}</div>
@@ -1091,11 +1091,11 @@ class ParticipantManager {
               <div style="padding:12px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                   <div style="flex:1; color:${sf1Color1}; font-weight:600; font-size:13px; min-height:18px;">${sf1P1 ? sf1P1.name : 'QF1 Winner'}</div>
-                  <input type="number" min="0" value="${sf1Match ? sf1Match.player1Score : 0}" onchange="participantManager.updateQFScore('sf1', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                  <input type="number" min="0" value="${sf1Match ? sf1Match.player1Score : 0}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
                 </div>
                 <div style="display:flex; align-items:center; gap:8px;">
                   <div style="flex:1; color:${sf1Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf1P2 ? sf1P2.name : 'QF2 Winner'}</div>
-                  <input type="number" min="0" value="${sf1Match ? sf1Match.player2Score : 0}" onchange="participantManager.updateQFScore('sf1', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                  <input type="number" min="0" value="${sf1Match ? sf1Match.player2Score : 0}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
                 </div>
               </div>
             </div>
@@ -1110,11 +1110,11 @@ class ParticipantManager {
               <div style="padding:12px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                   <div style="flex:1; color:${sf2Color1}; font-weight:600; font-size:13px; min-height:18px;">${sf2P1 ? sf2P1.name : 'QF3 Winner'}</div>
-                  <input type="number" min="0" value="${sf2Match ? sf2Match.player1Score : 0}" onchange="participantManager.updateQFScore('sf2', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                  <input type="number" min="0" value="${sf2Match ? sf2Match.player1Score : 0}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
                 </div>
                 <div style="display:flex; align-items:center; gap:8px;">
                   <div style="flex:1; color:${sf2Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf2P2 ? sf2P2.name : 'QF4 Winner'}</div>
-                  <input type="number" min="0" value="${sf2Match ? sf2Match.player2Score : 0}" onchange="participantManager.updateQFScore('sf2', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                  <input type="number" min="0" value="${sf2Match ? sf2Match.player2Score : 0}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
                 </div>
               </div>
             </div>
@@ -1167,19 +1167,19 @@ class ParticipantManager {
           <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px;">
             <div>
               <label style="font-size:10px; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:4px;">Group Stage</label>
-              <input type="number" min="0" value="${p.groupStage}" onchange="participantManager.updateScore(${p.id}, 'groupStage', this.value)" style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${p.groupStage}" disabled style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
             <div>
               <label style="font-size:10px; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:4px;">Quarter-Final</label>
-              <input type="number" min="0" value="${p.quarterFinal}" onchange="participantManager.updateScore(${p.id}, 'quarterFinal', this.value)" style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${p.quarterFinal}" disabled style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
             <div>
               <label style="font-size:10px; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:4px;">Semi-Final</label>
-              <input type="number" min="0" value="${p.semiFinal}" onchange="participantManager.updateScore(${p.id}, 'semiFinal', this.value)" style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${p.semiFinal}" disabled style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
             <div>
               <label style="font-size:10px; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:4px;">Final</label>
-              <input type="number" min="0" value="${p.final}" onchange="participantManager.updateScore(${p.id}, 'final', this.value)" style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${p.final}" disabled style="width:100%; padding:6px 8px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
           </div>
           
