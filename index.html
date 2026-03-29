@@ -968,22 +968,23 @@ class ParticipantManager {
 
     // Ensure QF matches exist in the matches array
     qfMatches.forEach((qf, idx) => {
-      const existingMatch = this.matches.find(m => m.id === qf.id);
+      let existingMatch = this.matches.find(m => m.id === qf.id);
       if (!existingMatch && qf.p1 && qf.p2) {
-        let p1Score = 0, p2Score = 0;
-        // Set QF1 result: Clinton wins 3-0 over Leshaun
-        if (qf.id === 'qf1') {
-          p1Score = 0;  // Leshaun
-          p2Score = 3;  // Clinton
-        }
-        this.matches.push({
+        existingMatch = {
           id: qf.id,
           group: 'QF',
           player1Id: qf.p1.id,
           player2Id: qf.p2.id,
-          player1Score: p1Score,
-          player2Score: p2Score
-        });
+          player1Score: 0,
+          player2Score: 0
+        };
+        this.matches.push(existingMatch);
+      }
+      
+      // Force QF1 result: Clinton wins 3-0 over Leshaun
+      if (existingMatch && qf.id === 'qf1') {
+        existingMatch.player1Score = 0;  // Leshaun
+        existingMatch.player2Score = 3;  // Clinton
       }
     });
 
