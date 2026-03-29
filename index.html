@@ -967,16 +967,22 @@ class ParticipantManager {
     ];
 
     // Ensure QF matches exist in the matches array
-    qfMatches.forEach(qf => {
+    qfMatches.forEach((qf, idx) => {
       const existingMatch = this.matches.find(m => m.id === qf.id);
       if (!existingMatch && qf.p1 && qf.p2) {
+        let p1Score = 0, p2Score = 0;
+        // Set QF1 result: Clinton wins 3-0 over Leshaun
+        if (qf.id === 'qf1') {
+          p1Score = 0;  // Leshaun
+          p2Score = 3;  // Clinton
+        }
         this.matches.push({
           id: qf.id,
           group: 'QF',
           player1Id: qf.p1.id,
           player2Id: qf.p2.id,
-          player1Score: 0,
-          player2Score: 0
+          player1Score: p1Score,
+          player2Score: p2Score
         });
       }
     });
@@ -1005,6 +1011,7 @@ class ParticipantManager {
       
       const color1 = this.getBlockColor(qf.p1.block);
       const color2 = this.getBlockColor(qf.p2.block);
+      const qf1Note = qf.idx === 1 ? '<div style="font-size:11px; color:var(--muted); margin-top:8px; text-align:center;">after penalties</div>' : '';
 
       html += `
         <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
@@ -1014,12 +1021,13 @@ class ParticipantManager {
           <div style="padding:12px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
               <div style="flex:1; color:${color1}; font-weight:600; font-size:13px;">${qf.p1.name}</div>
-              <input type="number" min="0" value="${qf.match.player1Score}" onchange="participantManager.updateQFScore('${qf.match.id}', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${qf.match.player1Score}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <div style="flex:1; color:${color2}; font-weight:600; font-size:13px;">${qf.p2.name}</div>
-              <input type="number" min="0" value="${qf.match.player2Score}" onchange="participantManager.updateQFScore('${qf.match.id}', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+              <input type="number" min="0" value="${qf.match.player2Score}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
             </div>
+            ${qf1Note}
           </div>
         </div>
       `;
@@ -1035,6 +1043,17 @@ class ParticipantManager {
       return { matchIdx: idx, winner: winner };
     });
 
+    // Get SF players and colors
+    const sf1P1 = qfWinners[0]?.winner;
+    const sf1P2 = qfWinners[1]?.winner;
+    const sf1Color1 = sf1P1 ? this.getBlockColor(sf1P1.block) : 'var(--muted)';
+    const sf1Color2 = sf1P2 ? this.getBlockColor(sf1P2.block) : 'var(--muted)';
+
+    const sf2P1 = qfWinners[2]?.winner;
+    const sf2P2 = qfWinners[3]?.winner;
+    const sf2Color1 = sf2P1 ? this.getBlockColor(sf2P1.block) : 'var(--muted)';
+    const sf2Color2 = sf2P2 ? this.getBlockColor(sf2P2.block) : 'var(--muted)';
+
     html += `
         <!-- SEMIFINALS -->
         <div style="flex:1; min-width:200px;">
@@ -1042,34 +1061,60 @@ class ParticipantManager {
           <div style="display:flex; flex-direction:column; justify-content:space-around; gap:30px; min-height:500px;">
     `;
 
+    // Create or get semi-final matches
+    const sfMatches = [
+      { id: 'sf1', p1: sf1P1, p2: sf1P2 },
+      { id: 'sf2', p1: sf2P1, p2: sf2P2 }
+    ];
+
+    sfMatches.forEach(sf => {
+      const existingMatch = this.matches.find(m => m.id === sf.id);
+      if (!existingMatch && sf.p1 && sf.p2) {
+        this.matches.push({
+          id: sf.id,
+          group: 'SF',
+          player1Id: sf.p1.id,
+          player2Id: sf.p2.id,
+          player1Score: 0,
+          player2Score: 0
+        });
+      }
+    });
+
     // SF1: QF1 Winner vs QF2 Winner
-    const sf1P1 = qfWinners[0]?.winner;
-    const sf1P2 = qfWinners[1]?.winner;
-    const sf1Color1 = sf1P1 ? this.getBlockColor(sf1P1.block) : 'var(--muted)';
-    const sf1Color2 = sf1P2 ? this.getBlockColor(sf1P2.block) : 'var(--muted)';
+    const sf1Match = this.matches.find(m => m.id === 'sf1');
 
     html += `
             <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
               <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); font-size:11px; color:var(--muted); letter-spacing:1px;">SF1 • QF1 Winner vs QF2 Winner</div>
               <div style="padding:12px;">
-                <div style="padding:8px 0; color:${sf1Color1}; font-weight:600; font-size:13px; margin-bottom:8px; min-height:18px;">${sf1P1 ? sf1P1.name : 'QF1 Winner'}</div>
-                <div style="padding:8px 0; color:${sf1Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf1P2 ? sf1P2.name : 'QF2 Winner'}</div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <div style="flex:1; color:${sf1Color1}; font-weight:600; font-size:13px; min-height:18px;">${sf1P1 ? sf1P1.name : 'QF1 Winner'}</div>
+                  <input type="number" min="0" value="${sf1Match ? sf1Match.player1Score : 0}" onchange="participantManager.updateQFScore('sf1', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="flex:1; color:${sf1Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf1P2 ? sf1P2.name : 'QF2 Winner'}</div>
+                  <input type="number" min="0" value="${sf1Match ? sf1Match.player2Score : 0}" onchange="participantManager.updateQFScore('sf1', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                </div>
               </div>
             </div>
     `;
 
     // SF2: QF3 Winner vs QF4 Winner
-    const sf2P1 = qfWinners[2]?.winner;
-    const sf2P2 = qfWinners[3]?.winner;
-    const sf2Color1 = sf2P1 ? this.getBlockColor(sf2P1.block) : 'var(--muted)';
-    const sf2Color2 = sf2P2 ? this.getBlockColor(sf2P2.block) : 'var(--muted)';
+    const sf2Match = this.matches.find(m => m.id === 'sf2');
 
     html += `
             <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
               <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); font-size:11px; color:var(--muted); letter-spacing:1px;">SF2 • QF3 Winner vs QF4 Winner</div>
               <div style="padding:12px;">
-                <div style="padding:8px 0; color:${sf2Color1}; font-weight:600; font-size:13px; margin-bottom:8px; min-height:18px;">${sf2P1 ? sf2P1.name : 'QF3 Winner'}</div>
-                <div style="padding:8px 0; color:${sf2Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf2P2 ? sf2P2.name : 'QF4 Winner'}</div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <div style="flex:1; color:${sf2Color1}; font-weight:600; font-size:13px; min-height:18px;">${sf2P1 ? sf2P1.name : 'QF3 Winner'}</div>
+                  <input type="number" min="0" value="${sf2Match ? sf2Match.player1Score : 0}" onchange="participantManager.updateQFScore('sf2', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="flex:1; color:${sf2Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf2P2 ? sf2P2.name : 'QF4 Winner'}</div>
+                  <input type="number" min="0" value="${sf2Match ? sf2Match.player2Score : 0}" onchange="participantManager.updateQFScore('sf2', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+                </div>
               </div>
             </div>
           </div>
