@@ -765,6 +765,19 @@ class ParticipantManager {
     }
   }
 
+  updateQFScore(matchId, player, value) {
+    const match = this.matches.find(m => m.id === matchId);
+    if (match) {
+      if (player === 'player1') {
+        match.player1Score = parseInt(value) || 0;
+      } else {
+        match.player2Score = parseInt(value) || 0;
+      }
+      this.saveMatches();
+      this.renderBracket();
+    }
+  }
+
   getBlockColor(block) {
     const colors = {
       'onca': 'var(--onca)',
@@ -935,51 +948,49 @@ class ParticipantManager {
       return;
     }
 
-    // Setup quarter-final pairings with specific matchups
-    const quarterfinalsCheck = ['A', 'B', 'C', 'D'].every(group => allStandings[group].length >= 2);
-    if (!quarterfinalsCheck) {
-      bracketContent.style.display = 'none';
-      bracketEmpty.style.display = 'block';
-      return;
-    }
-
-    // Find players for custom matchups
+    // Find players for quarter-final matchups
+    const leshaun = this.participants.find(p => p.name === 'Leshaun Hall');
+    const clinton = this.participants.find(p => p.name === 'Clinton Hutchinson');
+    const kanye = this.participants.find(p => p.name === 'Kanye Tulsie');
     const archie = this.participants.find(p => p.name === 'Archie Rowles');
+    const janmichael = this.participants.find(p => p.name === 'Jan-Michael Johnson');
+    const malique = this.participants.find(p => p.name === 'Malique Palmer');
     const lamar = this.participants.find(p => p.name === 'Lamar Haye');
     const dorren = this.participants.find(p => p.name === 'Dorren Haughton');
-    const kanye = this.participants.find(p => p.name === 'Kanye Tulsie');
 
-    const quarterfinalPairings = [];
-    
-    if (archie && lamar) {
-      quarterfinalPairings.push({
-        matchName: `${archie.name} vs ${lamar.name}`,
-        first: archie,
-        second: lamar
-      });
-    }
-    
-    if (dorren && kanye) {
-      quarterfinalPairings.push({
-        matchName: `${dorren.name} vs ${kanye.name}`,
-        first: dorren,
-        second: kanye
-      });
-    }
+    // Create or get quarter-final matches
+    const qfMatches = [
+      { id: 'qf1', p1: leshaun, p2: clinton },
+      { id: 'qf2', p1: kanye, p2: archie },
+      { id: 'qf3', p1: janmichael, p2: malique },
+      { id: 'qf4', p1: lamar, p2: dorren }
+    ];
 
-    // Fill remaining slots with group-based seeding if needed
-    if (quarterfinalPairings.length < 4) {
-      quarterfinalPairings.push({
-        matchName: 'C1 vs B2',
-        first: allStandings['C'][0],
-        second: allStandings['B'][1]
-      });
-      quarterfinalPairings.push({
-        matchName: 'C2 vs B1',
-        first: allStandings['C'][1],
-        second: allStandings['B'][0]
-      });
-    }
+    // Ensure QF matches exist in the matches array
+    qfMatches.forEach(qf => {
+      const existingMatch = this.matches.find(m => m.id === qf.id);
+      if (!existingMatch && qf.p1 && qf.p2) {
+        this.matches.push({
+          id: qf.id,
+          group: 'QF',
+          player1Id: qf.p1.id,
+          player2Id: qf.p2.id,
+          player1Score: 0,
+          player2Score: 0
+        });
+      }
+    });
+
+    // Get QF match data
+    const qfData = qfMatches.map((qf, idx) => {
+      const match = this.matches.find(m => m.id === qf.id);
+      return {
+        idx: idx + 1,
+        match: match || { player1Score: 0, player2Score: 0 },
+        p1: qf.p1,
+        p2: qf.p2
+      };
+    });
 
     let html = `
       <div style="display:flex; justify-content:space-between; gap:20px; position:relative;">
@@ -989,18 +1000,26 @@ class ParticipantManager {
           <div style="display:flex; flex-direction:column; gap:30px; justify-content:space-around; min-height:500px;">
     `;
 
-    quarterfinalPairings.forEach((pairing, idx) => {
-      const color1 = this.getBlockColor(pairing.first.block);
-      const color2 = this.getBlockColor(pairing.second.block);
+    qfData.forEach((qf) => {
+      if (!qf.p1 || !qf.p2) return;
+      
+      const color1 = this.getBlockColor(qf.p1.block);
+      const color2 = this.getBlockColor(qf.p2.block);
 
       html += `
         <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
           <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); display:flex; gap:8px; font-size:11px; color:var(--muted); letter-spacing:1px;">
-            <span>QF${idx + 1}</span> <span style="color:var(--gold);">•</span> <span>${pairing.matchName}</span>
+            <span>QF${qf.idx}</span> <span style="color:var(--gold);">•</span> <span>${qf.p1.name} vs ${qf.p2.name}</span>
           </div>
           <div style="padding:12px;">
-            <div style="padding:8px 0; color:${color1}; font-weight:600; font-size:13px; margin-bottom:8px;">${pairing.first.name}</div>
-            <div style="padding:8px 0; color:${color2}; font-weight:600; font-size:13px;">${pairing.second.name}</div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <div style="flex:1; color:${color1}; font-weight:600; font-size:13px;">${qf.p1.name}</div>
+              <input type="number" min="0" value="${qf.match.player1Score}" onchange="participantManager.updateQFScore('${qf.match.id}', 'player1', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="flex:1; color:${color2}; font-weight:600; font-size:13px;">${qf.p2.name}</div>
+              <input type="number" min="0" value="${qf.match.player2Score}" onchange="participantManager.updateQFScore('${qf.match.id}', 'player2', this.value)" style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600;">
+            </div>
           </div>
         </div>
       `;
@@ -1008,15 +1027,54 @@ class ParticipantManager {
 
     html += `</div></div>`;
 
+    // Calculate QF winners for semi-finals
+    const qfWinners = qfData.map((qf, idx) => {
+      if (!qf.match) return null;
+      const winner = qf.match.player1Score > qf.match.player2Score ? qf.p1 : 
+                     qf.match.player2Score > qf.match.player1Score ? qf.p2 : null;
+      return { matchIdx: idx, winner: winner };
+    });
+
     html += `
         <!-- SEMIFINALS -->
         <div style="flex:1; min-width:200px;">
           <div style="font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; text-align:center;">Semi Finals</div>
           <div style="display:flex; flex-direction:column; justify-content:space-around; gap:30px; min-height:500px;">
-            <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; text-align:center; color:var(--muted); font-size:12px;">QF1 Winner<br><span style="color:var(--gold); font-weight:600; display:block; margin-top:4px;">vs</span><br>QF2 Winner</div>
-            <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; text-align:center; color:var(--muted); font-size:12px;">QF3 Winner<br><span style="color:var(--gold); font-weight:600; display:block; margin-top:4px;">vs</span><br>QF4 Winner</div>
+    `;
+
+    // SF1: QF1 Winner vs QF2 Winner
+    const sf1P1 = qfWinners[0]?.winner;
+    const sf1P2 = qfWinners[1]?.winner;
+    const sf1Color1 = sf1P1 ? this.getBlockColor(sf1P1.block) : 'var(--muted)';
+    const sf1Color2 = sf1P2 ? this.getBlockColor(sf1P2.block) : 'var(--muted)';
+
+    html += `
+            <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+              <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); font-size:11px; color:var(--muted); letter-spacing:1px;">SF1 • QF1 Winner vs QF2 Winner</div>
+              <div style="padding:12px;">
+                <div style="padding:8px 0; color:${sf1Color1}; font-weight:600; font-size:13px; margin-bottom:8px; min-height:18px;">${sf1P1 ? sf1P1.name : 'QF1 Winner'}</div>
+                <div style="padding:8px 0; color:${sf1Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf1P2 ? sf1P2.name : 'QF2 Winner'}</div>
+              </div>
+            </div>
+    `;
+
+    // SF2: QF3 Winner vs QF4 Winner
+    const sf2P1 = qfWinners[2]?.winner;
+    const sf2P2 = qfWinners[3]?.winner;
+    const sf2Color1 = sf2P1 ? this.getBlockColor(sf2P1.block) : 'var(--muted)';
+    const sf2Color2 = sf2P2 ? this.getBlockColor(sf2P2.block) : 'var(--muted)';
+
+    html += `
+            <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+              <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); font-size:11px; color:var(--muted); letter-spacing:1px;">SF2 • QF3 Winner vs QF4 Winner</div>
+              <div style="padding:12px;">
+                <div style="padding:8px 0; color:${sf2Color1}; font-weight:600; font-size:13px; margin-bottom:8px; min-height:18px;">${sf2P1 ? sf2P1.name : 'QF3 Winner'}</div>
+                <div style="padding:8px 0; color:${sf2Color2}; font-weight:600; font-size:13px; min-height:18px;">${sf2P2 ? sf2P2.name : 'QF4 Winner'}</div>
+              </div>
+            </div>
           </div>
         </div>
+
 
         <!-- FINAL -->
         <div style="flex:0.8; min-width:150px;">
