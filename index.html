@@ -215,6 +215,75 @@ body::before {
 @keyframes fadeUp { to{opacity:1;transform:translateY(0)} }
 .d1{animation-delay:0.1s} .d2{animation-delay:0.2s} .d3{animation-delay:0.3s}
 .d4{animation-delay:0.4s} .d5{animation-delay:0.5s} .d6{animation-delay:0.6s} .d7{animation-delay:0.7s}
+
+/* LIVE DATA + ADMIN */
+.live-section { margin-bottom:16px; }
+.live-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:900px){ .live-grid{grid-template-columns:1fr;} }
+.live-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.live-card-head { padding:14px 18px; background:var(--surface2); border-bottom:1px solid var(--border); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--gold); }
+.live-card-body { padding:16px 18px; font-size:13px; color:var(--muted); line-height:1.6; }
+.match-item { padding:10px 0; border-bottom:1px solid var(--border); }
+.match-item:last-child { border-bottom:none; }
+.match-row-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.match-row { display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:center; font-family:'Barlow Condensed',sans-serif; font-size:13px; }
+.match-score { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--gold); min-width:56px; text-align:center; }
+.prog-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:10px; }
+@media(max-width:520px){ .prog-grid{grid-template-columns:repeat(2,1fr);} }
+.prog-block { text-align:center; padding:12px; border-radius:10px; background:var(--surface2); border:1px solid var(--border); }
+.prog-block .lbl { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.prog-block .val { font-family:'Bebas Neue',sans-serif; font-size:28px; }
+.prog-stage { margin-top:12px; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Barlow Condensed',sans-serif; font-size:13px; color:var(--text); }
+.sync-pill { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-family:'Barlow Condensed',sans-serif; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+.sync-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); }
+.sync-dot.ok { background:#4ADE80; box-shadow:0 0 8px rgba(74,222,128,0.5); }
+.sync-dot.err { background:#F87171; }
+
+.admin-fab {
+  position:fixed; bottom:24px; right:24px; z-index:100;
+  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:2px;
+  padding:14px 22px; border-radius:999px; border:none; cursor:pointer;
+  background:linear-gradient(135deg,var(--gold),#c8860a); color:#0a0e14;
+  box-shadow:0 8px 32px rgba(240,192,64,0.35);
+}
+.admin-fab:hover { filter:brightness(1.08); }
+.admin-backdrop { display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.65); backdrop-filter:blur(4px); }
+.admin-backdrop.open { display:block; }
+.admin-panel {
+  display:none; position:fixed; z-index:210; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(920px,calc(100vw - 24px)); max-height:min(88vh,calc(100vh - 24px));
+  background:var(--surface); border:1px solid var(--border-bright); border-radius:16px;
+  overflow:hidden; flex-direction:column;
+}
+.admin-panel.open { display:flex; }
+.admin-panel-head { padding:16px 20px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.admin-panel-head h2 { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; color:var(--gold); }
+.admin-panel-body { overflow-y:auto; padding:18px 20px 24px; flex:1; }
+.admin-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.admin-tab { padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--muted); font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; cursor:pointer; text-transform:uppercase; }
+.admin-tab.active { border-color:rgba(240,192,64,0.4); color:var(--gold); background:rgba(240,192,64,0.08); }
+.admin-pane { display:none; }
+.admin-pane.active { display:block; }
+.admin-field { margin-bottom:12px; }
+.admin-field label { display:block; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.admin-field input, .admin-field select, .admin-field textarea {
+  width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:'Barlow',sans-serif; font-size:14px;
+}
+.admin-field textarea { min-height:72px; resize:vertical; }
+.admin-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media(max-width:560px){ .admin-grid-2{grid-template-columns:1fr;} }
+.admin-pgrid { display:grid; grid-template-columns:48px 72px 1fr 100px; gap:8px; align-items:center; font-size:12px; margin-bottom:8px; }
+@media(max-width:640px){ .admin-pgrid{grid-template-columns:40px 56px 1fr; } .admin-pgrid select{grid-column:1/-1;} }
+.admin-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+.admin-btn { padding:10px 20px; border-radius:8px; border:none; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:2px; text-transform:uppercase; cursor:pointer; font-size:13px; }
+.admin-btn-primary { background:var(--gold); color:#0a0e14; }
+.admin-btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.admin-msg { font-size:13px; margin-top:8px; color:var(--muted); }
+.admin-msg.err { color:#F87171; }
+.admin-msg.ok { color:#4ADE80; }
+.match-editor { border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:10px; background:var(--surface2); }
+.match-editor .row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+@media(max-width:520px){ .match-editor .row{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
@@ -243,10 +312,10 @@ body::before {
         <div class="block-name">ONCA</div>
         <div class="block-desc">4 representatives — one per group</div>
         <div class="block-members">
-          <div class="member-row"><span class="member-num">01</span> Onca Rep. <span class="member-group-tag">Group A</span></div>
-          <div class="member-row"><span class="member-num">02</span> Onca Rep. <span class="member-group-tag">Group B</span></div>
-          <div class="member-row"><span class="member-num">03</span> Onca Rep. <span class="member-group-tag">Group C</span></div>
-          <div class="member-row"><span class="member-num">04</span> Onca Rep. <span class="member-group-tag">Group D</span></div>
+          <div class="member-row" data-slot="A_onca"><span class="member-num">01</span> <span class="js-pname">Onca Rep.</span> <span class="member-group-tag">Group A</span></div>
+          <div class="member-row" data-slot="B_onca"><span class="member-num">02</span> <span class="js-pname">Onca Rep.</span> <span class="member-group-tag">Group B</span></div>
+          <div class="member-row" data-slot="C_onca"><span class="member-num">03</span> <span class="js-pname">Onca Rep.</span> <span class="member-group-tag">Group C</span></div>
+          <div class="member-row" data-slot="D_onca"><span class="member-num">04</span> <span class="js-pname">Onca Rep.</span> <span class="member-group-tag">Group D</span></div>
         </div>
       </div>
     </div>
@@ -256,10 +325,10 @@ body::before {
         <div class="block-name">GENUS</div>
         <div class="block-desc">4 representatives — one per group</div>
         <div class="block-members">
-          <div class="member-row"><span class="member-num">01</span> Genus Rep. <span class="member-group-tag">Group A</span></div>
-          <div class="member-row"><span class="member-num">02</span> Genus Rep. <span class="member-group-tag">Group B</span></div>
-          <div class="member-row"><span class="member-num">03</span> Genus Rep. <span class="member-group-tag">Group C</span></div>
-          <div class="member-row"><span class="member-num">04</span> Genus Rep. <span class="member-group-tag">Group D</span></div>
+          <div class="member-row" data-slot="A_genus"><span class="member-num">01</span> <span class="js-pname">Genus Rep.</span> <span class="member-group-tag">Group A</span></div>
+          <div class="member-row" data-slot="B_genus"><span class="member-num">02</span> <span class="js-pname">Genus Rep.</span> <span class="member-group-tag">Group B</span></div>
+          <div class="member-row" data-slot="C_genus"><span class="member-num">03</span> <span class="js-pname">Genus Rep.</span> <span class="member-group-tag">Group C</span></div>
+          <div class="member-row" data-slot="D_genus"><span class="member-num">04</span> <span class="js-pname">Genus Rep.</span> <span class="member-group-tag">Group D</span></div>
         </div>
       </div>
     </div>
@@ -269,10 +338,10 @@ body::before {
         <div class="block-name">PARDUS</div>
         <div class="block-desc">4 representatives — one per group</div>
         <div class="block-members">
-          <div class="member-row"><span class="member-num">01</span> Pardus Rep. <span class="member-group-tag">Group A</span></div>
-          <div class="member-row"><span class="member-num">02</span> Pardus Rep. <span class="member-group-tag">Group B</span></div>
-          <div class="member-row"><span class="member-num">03</span> Pardus Rep. <span class="member-group-tag">Group C</span></div>
-          <div class="member-row"><span class="member-num">04</span> Pardus Rep. <span class="member-group-tag">Group D</span></div>
+          <div class="member-row" data-slot="A_pardus"><span class="member-num">01</span> <span class="js-pname">Pardus Rep.</span> <span class="member-group-tag">Group A</span></div>
+          <div class="member-row" data-slot="B_pardus"><span class="member-num">02</span> <span class="js-pname">Pardus Rep.</span> <span class="member-group-tag">Group B</span></div>
+          <div class="member-row" data-slot="C_pardus"><span class="member-num">03</span> <span class="js-pname">Pardus Rep.</span> <span class="member-group-tag">Group C</span></div>
+          <div class="member-row" data-slot="D_pardus"><span class="member-num">04</span> <span class="js-pname">Pardus Rep.</span> <span class="member-group-tag">Group D</span></div>
         </div>
       </div>
     </div>
@@ -282,10 +351,10 @@ body::before {
         <div class="block-name">LYNX</div>
         <div class="block-desc">4 representatives — one per group</div>
         <div class="block-members">
-          <div class="member-row"><span class="member-num">01</span> Lynx Rep. <span class="member-group-tag">Group A</span></div>
-          <div class="member-row"><span class="member-num">02</span> Lynx Rep. <span class="member-group-tag">Group B</span></div>
-          <div class="member-row"><span class="member-num">03</span> Lynx Rep. <span class="member-group-tag">Group C</span></div>
-          <div class="member-row"><span class="member-num">04</span> Lynx Rep. <span class="member-group-tag">Group D</span></div>
+          <div class="member-row" data-slot="A_lynx"><span class="member-num">01</span> <span class="js-pname">Lynx Rep.</span> <span class="member-group-tag">Group A</span></div>
+          <div class="member-row" data-slot="B_lynx"><span class="member-num">02</span> <span class="js-pname">Lynx Rep.</span> <span class="member-group-tag">Group B</span></div>
+          <div class="member-row" data-slot="C_lynx"><span class="member-num">03</span> <span class="js-pname">Lynx Rep.</span> <span class="member-group-tag">Group C</span></div>
+          <div class="member-row" data-slot="D_lynx"><span class="member-num">04</span> <span class="js-pname">Lynx Rep.</span> <span class="member-group-tag">Group D</span></div>
         </div>
       </div>
     </div>
@@ -309,25 +378,25 @@ body::before {
       <table class="group-table">
         <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
         <tbody>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+          <tr data-slot="A_onca">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name js-pname">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
             <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
-            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-1st">1st · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+          <tr data-slot="A_genus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name js-pname">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
             <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
-            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-2nd">2nd · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+          <tr data-slot="A_pardus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name js-pname">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
             <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+          <tr data-slot="A_lynx">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name js-pname">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
             <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
         </tbody>
       </table>
@@ -341,25 +410,25 @@ body::before {
       <table class="group-table">
         <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
         <tbody>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+          <tr data-slot="B_pardus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name js-pname">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
             <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
-            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-1st">1st · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+          <tr data-slot="B_lynx">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name js-pname">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
             <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
-            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-2nd">2nd · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+          <tr data-slot="B_onca">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name js-pname">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
             <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+          <tr data-slot="B_genus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name js-pname">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
             <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
         </tbody>
       </table>
@@ -373,25 +442,25 @@ body::before {
       <table class="group-table">
         <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
         <tbody>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+          <tr data-slot="C_lynx">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name js-pname">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
             <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
-            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-1st">1st · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+          <tr data-slot="C_onca">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name js-pname">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
             <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
-            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-2nd">2nd · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+          <tr data-slot="C_genus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name js-pname">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
             <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+          <tr data-slot="C_pardus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name js-pname">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
             <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
         </tbody>
       </table>
@@ -405,30 +474,62 @@ body::before {
       <table class="group-table">
         <thead><tr><th>Competitor</th><th>Block</th><th>Status</th></tr></thead>
         <tbody>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
+          <tr data-slot="D_genus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--genus)"></div><div><div class="player-name js-pname">Genus Rep.</div><div class="player-block-tag">Genus</div></div></div></td>
             <td><span style="color:var(--genus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">GENUS</span></td>
-            <td><span class="advance-badge badge-1st">1st · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-1st">1st · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
+          <tr data-slot="D_pardus">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--pardus)"></div><div><div class="player-name js-pname">Pardus Rep.</div><div class="player-block-tag">Pardus</div></div></div></td>
             <td><span style="color:var(--pardus);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">PARDUS</span></td>
-            <td><span class="advance-badge badge-2nd">2nd · Advance</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-2nd">2nd · Advance</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
+          <tr data-slot="D_lynx">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--lynx)"></div><div><div class="player-name js-pname">Lynx Rep.</div><div class="player-block-tag">Lynx</div></div></div></td>
             <td><span style="color:var(--lynx);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">LYNX</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
-          <tr>
-            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
+          <tr data-slot="D_onca">
+            <td><div class="player-cell"><div class="player-dot" style="background:var(--onca)"></div><div><div class="player-name js-pname">Onca Rep.</div><div class="player-block-tag">Onca</div></div></div></td>
             <td><span style="color:var(--onca);font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">ONCA</span></td>
-            <td><span class="advance-badge badge-out">Eliminated</span></td>
+            <td class="js-pstatus"><span class="advance-badge badge-out">Eliminated</span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
+  </div>
+
+  <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
+
+  <!-- LIVE: matches + progression (Firestore) -->
+  <div class="fade-up d3 live-section">
+    <div class="s-label">Live data · synced from database</div>
+    <div class="s-title">TOURNAMENT BOARD</div>
+    <div class="sync-pill"><span class="sync-dot" id="syncDot"></span><span id="syncText">Connecting…</span></div>
+    <div class="live-grid">
+      <div class="live-card">
+        <div class="live-card-head">Match results</div>
+        <div class="live-card-body" id="matchListMount">
+          <p style="opacity:0.7;">No matches yet. Use Admin to add scores.</p>
+        </div>
+      </div>
+      <div class="live-card">
+        <div class="live-card-head">Progression</div>
+        <div class="live-card-body">
+          <div style="margin-bottom:6px;"><strong style="color:var(--text);">Current stage</strong></div>
+          <div class="prog-stage" id="progStageText">Group Stage</div>
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:16px 0 8px;">Block points (manual)</div>
+          <div class="prog-grid">
+            <div class="prog-block"><div class="lbl" style="color:var(--onca)">Onca</div><div class="val" id="pts-onca">0</div></div>
+            <div class="prog-block"><div class="lbl" style="color:var(--genus)">Genus</div><div class="val" id="pts-genus">0</div></div>
+            <div class="prog-block"><div class="lbl" style="color:var(--pardus)">Pardus</div><div class="val" id="pts-pardus">0</div></div>
+            <div class="prog-block"><div class="lbl" style="color:var(--lynx)">Lynx</div><div class="val" id="pts-lynx">0</div></div>
+          </div>
+          <p class="prog-stage" id="progNotes" style="margin-top:14px;white-space:pre-wrap;"></p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="rule"><div class="rule-line"></div><div class="rule-pip"></div><div class="rule-line"></div></div>
@@ -707,5 +808,372 @@ body::before {
   <div class="footer">Block Championship · Official Scoring Document</div>
 
 </div>
+
+<button type="button" class="admin-fab" id="adminFab" aria-label="Open admin panel">Admin</button>
+<div class="admin-backdrop" id="adminBackdrop" aria-hidden="true"></div>
+<div class="admin-panel" id="adminPanel" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+  <div class="admin-panel-head">
+    <h2 id="adminTitle">Tournament data</h2>
+    <button type="button" class="admin-btn admin-btn-ghost" id="adminClose">Close</button>
+  </div>
+  <div class="admin-panel-body">
+    <div id="authSection">
+      <p class="admin-msg" id="authStatus">Sign in to edit names, scores, and progression.</p>
+      <div class="admin-grid-2">
+        <div class="admin-field"><label for="authEmail">Email</label><input type="email" id="authEmail" autocomplete="username" placeholder="admin@example.com"></div>
+        <div class="admin-field"><label for="authPass">Password</label><input type="password" id="authPass" autocomplete="current-password" placeholder="••••••••"></div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="admin-btn admin-btn-primary" id="btnSignIn">Sign in</button>
+        <button type="button" class="admin-btn admin-btn-ghost" id="btnSignOut" style="display:none;">Sign out</button>
+      </div>
+    </div>
+
+    <div id="editorSection" style="display:none;">
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab active" data-tab="p">Participants</button>
+        <button type="button" class="admin-tab" data-tab="m">Matches</button>
+        <button type="button" class="admin-tab" data-tab="g">Progression</button>
+      </div>
+      <div class="admin-pane active" id="pane-p">
+        <p class="admin-msg">Names and group-stage status (1st / 2nd / eliminated) for each slot.</p>
+        <div id="participantsEditor"></div>
+      </div>
+      <div class="admin-pane" id="pane-m">
+        <p class="admin-msg">Add or edit match lines. Leave scores blank if not played yet.</p>
+        <div id="matchesEditor"></div>
+        <button type="button" class="admin-btn admin-btn-ghost" id="btnAddMatch" style="margin-top:10px;">+ Add match</button>
+      </div>
+      <div class="admin-pane" id="pane-g">
+        <div class="admin-field"><label for="inpStage">Current stage</label><input type="text" id="inpStage" placeholder="e.g. Quarter-Finals"></div>
+        <div class="admin-field"><label for="inpNotes">Notes</label><textarea id="inpNotes" placeholder="Optional bracket notes…"></textarea></div>
+        <div class="admin-grid-2">
+          <div class="admin-field"><label for="inpPtsOnca">Onca points</label><input type="number" id="inpPtsOnca" min="0" step="1" value="0"></div>
+          <div class="admin-field"><label for="inpPtsGenus">Genus points</label><input type="number" id="inpPtsGenus" min="0" step="1" value="0"></div>
+          <div class="admin-field"><label for="inpPtsPardus">Pardus points</label><input type="number" id="inpPtsPardus" min="0" step="1" value="0"></div>
+          <div class="admin-field"><label for="inpPtsLynx">Lynx points</label><input type="number" id="inpPtsLynx" min="0" step="1" value="0"></div>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="admin-btn admin-btn-primary" id="btnSave">Save to database</button>
+        <span class="admin-msg" id="saveMsg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script>
+(function () {
+  var firebaseConfig = {
+    apiKey: 'AIzaSyAGTCS13xcQyB7lv3Wv2dEjUErGohb8MZI',
+    authDomain: 'interblockfifa.firebaseapp.com',
+    projectId: 'interblockfifa',
+    storageBucket: 'interblockfifa.firebasestorage.app',
+    messagingSenderId: '304323499655',
+    appId: '1:304323499655:web:86b44eb539dcfc1b63ca22'
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+  var auth = firebase.auth();
+  var docRef = db.collection('tournament').doc('live');
+
+  var GROUP_ORDER = { A: ['onca', 'genus', 'pardus', 'lynx'], B: ['pardus', 'lynx', 'onca', 'genus'], C: ['lynx', 'onca', 'genus', 'pardus'], D: ['genus', 'pardus', 'lynx', 'onca'] };
+  var BLOCK_LABEL = { onca: 'Onca', genus: 'Genus', pardus: 'Pardus', lynx: 'Lynx' };
+  var DEFAULT_NAMES = { onca: 'Onca Rep.', genus: 'Genus Rep.', pardus: 'Pardus Rep.', lynx: 'Lynx Rep.' };
+  var DEFAULT_STATUS = {
+    A: { onca: '1st', genus: '2nd', pardus: 'out', lynx: 'out' },
+    B: { pardus: '1st', lynx: '2nd', onca: 'out', genus: 'out' },
+    C: { lynx: '1st', onca: '2nd', genus: 'out', pardus: 'out' },
+    D: { genus: '1st', pardus: '2nd', lynx: 'out', onca: 'out' }
+  };
+
+  function buildDefaultParticipants() {
+    var o = {};
+    ['A', 'B', 'C', 'D'].forEach(function (g) {
+      GROUP_ORDER[g].forEach(function (b) {
+        var key = g + '_' + b;
+        o[key] = { name: DEFAULT_NAMES[b], status: DEFAULT_STATUS[g][b] };
+      });
+    });
+    return o;
+  }
+
+  function normalizeState(data) {
+    var def = buildDefaultParticipants();
+    var participants = {};
+    Object.keys(def).forEach(function (k) {
+      var p = (data && data.participants && data.participants[k]) || {};
+      participants[k] = {
+        name: typeof p.name === 'string' && p.name.trim() ? p.name.trim() : def[k].name,
+        status: p.status === '1st' || p.status === '2nd' || p.status === 'out' ? p.status : def[k].status
+      };
+    });
+    var matches = Array.isArray(data && data.matches) ? data.matches.map(function (m) {
+      return {
+        id: m.id || ('m' + Math.random().toString(36).slice(2)),
+        label: String(m.label || ''),
+        homeLabel: String(m.homeLabel || ''),
+        awayLabel: String(m.awayLabel || ''),
+        homeScore: m.homeScore != null && m.homeScore !== '' ? String(m.homeScore) : '',
+        awayScore: m.awayScore != null && m.awayScore !== '' ? String(m.awayScore) : ''
+      };
+    }) : [];
+    var prog = data && data.progression ? data.progression : {};
+    var blockPoints = prog.blockPoints || {};
+    return {
+      participants: participants,
+      matches: matches,
+      progression: {
+        currentStage: typeof prog.currentStage === 'string' ? prog.currentStage : 'Group Stage',
+        notes: typeof prog.notes === 'string' ? prog.notes : '',
+        blockPoints: {
+          onca: Number(blockPoints.onca) || 0,
+          genus: Number(blockPoints.genus) || 0,
+          pardus: Number(blockPoints.pardus) || 0,
+          lynx: Number(blockPoints.lynx) || 0
+        }
+      }
+    };
+  }
+
+  function statusHTML(status) {
+    if (status === '1st') return '<span class="advance-badge badge-1st">1st · Advance</span>';
+    if (status === '2nd') return '<span class="advance-badge badge-2nd">2nd · Advance</span>';
+    return '<span class="advance-badge badge-out">Eliminated</span>';
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  var lastState = null;
+
+  function applyToPage(state) {
+    lastState = state;
+    document.querySelectorAll('[data-slot]').forEach(function (el) {
+      var key = el.getAttribute('data-slot');
+      var p = state.participants[key];
+      if (!p) return;
+      var nameEls = el.querySelectorAll('.js-pname');
+      nameEls.forEach(function (n) { n.textContent = p.name; });
+      var st = el.querySelector('.js-pstatus');
+      if (st) st.innerHTML = statusHTML(p.status);
+    });
+
+    var mount = document.getElementById('matchListMount');
+    if (mount) {
+      if (!state.matches.length) {
+        mount.innerHTML = '<p style="opacity:0.7;">No matches yet. Use Admin to add scores.</p>';
+      } else {
+        mount.innerHTML = state.matches.map(function (m) {
+          var title = m.label ? '<div class="match-row-label">' + escapeHtml(m.label) + '</div>' : '';
+          var a = m.homeScore !== '' ? escapeHtml(m.homeScore) : '—';
+          var b = m.awayScore !== '' ? escapeHtml(m.awayScore) : '—';
+          return '<div class="match-item">' + title + '<div class="match-row"><span>' + escapeHtml(m.homeLabel) + '</span><span class="match-score">' + a + ' - ' + b + '</span><span style="text-align:right">' + escapeHtml(m.awayLabel) + '</span></div></div>';
+        }).join('');
+      }
+    }
+
+    document.getElementById('progStageText').textContent = state.progression.currentStage;
+    document.getElementById('pts-onca').textContent = state.progression.blockPoints.onca;
+    document.getElementById('pts-genus').textContent = state.progression.blockPoints.genus;
+    document.getElementById('pts-pardus').textContent = state.progression.blockPoints.pardus;
+    document.getElementById('pts-lynx').textContent = state.progression.blockPoints.lynx;
+    var notesEl = document.getElementById('progNotes');
+    notesEl.textContent = state.progression.notes || '';
+    notesEl.style.display = state.progression.notes ? 'block' : 'none';
+  }
+
+  function setSync(ok, msg) {
+    var dot = document.getElementById('syncDot');
+    var t = document.getElementById('syncText');
+    dot.className = 'sync-dot' + (ok === true ? ' ok' : ok === false ? ' err' : '');
+    t.textContent = msg || '';
+  }
+
+  docRef.onSnapshot(function (snap) {
+    try {
+      var raw = snap.exists ? snap.data() : {};
+      var state = normalizeState(raw);
+      applyToPage(state);
+      setSync(true, snap.metadata.fromCache ? 'Live (cached)' : 'Live · synced');
+      var panelOpen = document.getElementById('adminPanel').classList.contains('open');
+      if (!panelOpen) fillEditorFromState(state);
+    } catch (e) {
+      console.error(e);
+      setSync(false, 'Error loading data');
+    }
+  }, function (err) {
+    console.error(err);
+    setSync(false, err.code === 'permission-denied' ? 'Permission denied — check Firestore rules' : 'Connection error');
+  });
+
+  function fillEditorFromState(state) {
+    if (!state) return;
+    var pe = document.getElementById('participantsEditor');
+    if (pe) {
+      var order = [];
+      ['A', 'B', 'C', 'D'].forEach(function (g) {
+        GROUP_ORDER[g].forEach(function (b) {
+          order.push(g + '_' + b);
+        });
+      });
+      pe.innerHTML = order.map(function (key) {
+        var p = state.participants[key];
+        var g = key.charAt(0);
+        var b = key.slice(2);
+        return '<div class="admin-pgrid"><span style="color:var(--muted);">' + g + '</span><span style="color:var(--' + b + ');font-weight:700;">' + BLOCK_LABEL[b] + '</span><input type="text" class="inp-pname" value="' + escapeAttr(p.name) + '" data-k="' + key + '"><select class="inp-pstat" data-k="' + key + '"><option value="1st"' + (p.status === '1st' ? ' selected' : '') + '>1st</option><option value="2nd"' + (p.status === '2nd' ? ' selected' : '') + '>2nd</option><option value="out"' + (p.status === 'out' ? ' selected' : '') + '>Eliminated</option></select></div>';
+      }).join('');
+    }
+
+    var me = document.getElementById('matchesEditor');
+    if (me) {
+      me.innerHTML = '';
+      state.matches.forEach(function (m) {
+        addMatchEditor(me, m);
+      });
+    }
+
+    document.getElementById('inpStage').value = state.progression.currentStage;
+    document.getElementById('inpNotes').value = state.progression.notes;
+    document.getElementById('inpPtsOnca').value = state.progression.blockPoints.onca;
+    document.getElementById('inpPtsGenus').value = state.progression.blockPoints.genus;
+    document.getElementById('inpPtsPardus').value = state.progression.blockPoints.pardus;
+    document.getElementById('inpPtsLynx').value = state.progression.blockPoints.lynx;
+  }
+
+  function addMatchEditor(container, m) {
+    m = m || {};
+    var id = m.id || ('m' + Math.random().toString(36).slice(2));
+    var d = document.createElement('div');
+    d.className = 'match-editor';
+    d.innerHTML = '<input type="hidden" class="m-id" value="' + escapeAttr(id) + '">' +
+      '<div class="admin-field"><label>Label (optional)</label><input type="text" class="m-label" placeholder="Group A · R1" value="' + escapeAttr(m.label || '') + '"></div>' +
+      '<div class="row"><div class="admin-field"><label>Home / A</label><input type="text" class="m-home" value="' + escapeAttr(m.homeLabel || '') + '"></div>' +
+      '<div class="admin-field"><label>Away / B</label><input type="text" class="m-away" value="' + escapeAttr(m.awayLabel || '') + '"></div></div>' +
+      '<div class="row"><div class="admin-field"><label>Score A</label><input type="text" class="m-s1" value="' + escapeAttr(m.homeScore || '') + '"></div>' +
+      '<div class="admin-field"><label>Score B</label><input type="text" class="m-s2" value="' + escapeAttr(m.awayScore || '') + '"></div></div>' +
+      '<button type="button" class="admin-btn admin-btn-ghost rm-match">Remove</button>';
+    d.querySelector('.rm-match').addEventListener('click', function () { d.remove(); });
+    container.appendChild(d);
+  }
+
+  function collectStateFromEditor() {
+    var base = lastState ? JSON.parse(JSON.stringify(lastState)) : normalizeState({});
+    var pe = document.getElementById('participantsEditor');
+    if (pe) {
+      pe.querySelectorAll('.inp-pname').forEach(function (inp) {
+        var k = inp.getAttribute('data-k');
+        if (!base.participants[k]) base.participants[k] = { name: '', status: 'out' };
+        base.participants[k].name = inp.value.trim() || DEFAULT_NAMES[k.split('_')[1]];
+      });
+      pe.querySelectorAll('.inp-pstat').forEach(function (sel) {
+        var k = sel.getAttribute('data-k');
+        base.participants[k].status = sel.value;
+      });
+    }
+    base.matches = [];
+    document.getElementById('matchesEditor').querySelectorAll('.match-editor').forEach(function (row) {
+      base.matches.push({
+        id: row.querySelector('.m-id').value,
+        label: row.querySelector('.m-label').value.trim(),
+        homeLabel: row.querySelector('.m-home').value.trim(),
+        awayLabel: row.querySelector('.m-away').value.trim(),
+        homeScore: row.querySelector('.m-s1').value.trim(),
+        awayScore: row.querySelector('.m-s2').value.trim()
+      });
+    });
+    base.progression = {
+      currentStage: document.getElementById('inpStage').value.trim() || 'Group Stage',
+      notes: document.getElementById('inpNotes').value,
+      blockPoints: {
+        onca: Number(document.getElementById('inpPtsOnca').value) || 0,
+        genus: Number(document.getElementById('inpPtsGenus').value) || 0,
+        pardus: Number(document.getElementById('inpPtsPardus').value) || 0,
+        lynx: Number(document.getElementById('inpPtsLynx').value) || 0
+      }
+    };
+    return normalizeState(base);
+  }
+
+  function openPanel() {
+    document.getElementById('adminBackdrop').classList.add('open');
+    document.getElementById('adminPanel').classList.add('open');
+    if (lastState) fillEditorFromState(lastState);
+    else docRef.get().then(function (s) { fillEditorFromState(normalizeState(s.exists ? s.data() : {})); });
+  }
+  function closePanel() {
+    document.getElementById('adminBackdrop').classList.remove('open');
+    document.getElementById('adminPanel').classList.remove('open');
+  }
+
+  document.getElementById('adminFab').addEventListener('click', openPanel);
+  document.getElementById('adminClose').addEventListener('click', closePanel);
+  document.getElementById('adminBackdrop').addEventListener('click', closePanel);
+
+  document.querySelectorAll('.admin-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.admin-tab').forEach(function (t) { t.classList.remove('active'); });
+      document.querySelectorAll('.admin-pane').forEach(function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('pane-' + tab.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  document.getElementById('btnAddMatch').addEventListener('click', function () {
+    addMatchEditor(document.getElementById('matchesEditor'), {});
+  });
+
+  auth.onAuthStateChanged(function (user) {
+    var authSection = document.getElementById('authSection');
+    var editorSection = document.getElementById('editorSection');
+    var btnOut = document.getElementById('btnSignOut');
+    var status = document.getElementById('authStatus');
+    if (user) {
+      status.textContent = 'Signed in as ' + user.email;
+      editorSection.style.display = 'block';
+      btnOut.style.display = 'inline-block';
+      if (lastState) fillEditorFromState(lastState);
+    } else {
+      status.textContent = 'Sign in to edit names, scores, and progression.';
+      editorSection.style.display = 'none';
+      btnOut.style.display = 'none';
+    }
+  });
+
+  document.getElementById('btnSignIn').addEventListener('click', function () {
+    var email = document.getElementById('authEmail').value.trim();
+    var pass = document.getElementById('authPass').value;
+    document.getElementById('authStatus').textContent = 'Signing in…';
+    auth.signInWithEmailAndPassword(email, pass).catch(function (e) {
+      document.getElementById('authStatus').textContent = e.message;
+    });
+  });
+  document.getElementById('btnSignOut').addEventListener('click', function () { auth.signOut(); });
+
+  document.getElementById('btnSave').addEventListener('click', function () {
+    var msg = document.getElementById('saveMsg');
+    msg.textContent = 'Saving…';
+    msg.className = 'admin-msg';
+    var payload = collectStateFromEditor();
+    docRef.set(payload).then(function () {
+      msg.textContent = 'Saved.';
+      msg.className = 'admin-msg ok';
+    }).catch(function (e) {
+      msg.textContent = e.message;
+      msg.className = 'admin-msg err';
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
