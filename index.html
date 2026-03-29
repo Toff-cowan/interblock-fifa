@@ -935,23 +935,36 @@ class ParticipantManager {
       return;
     }
 
-    const quarterfinalPairings = [];
-    ['A', 'B', 'C', 'D'].forEach(group => {
-      const standings = allStandings[group];
-      if (standings.length >= 2) {
-        quarterfinalPairings.push({
-          group: group,
-          first: standings[0],
-          second: standings[1]
-        });
-      }
-    });
-
-    if (quarterfinalPairings.length < 4) {
+    // Setup quarter-final pairings: Group A vs D, Group C vs B
+    const quarterfinalsCheck = ['A', 'B', 'C', 'D'].every(group => allStandings[group].length >= 2);
+    if (!quarterfinalsCheck) {
       bracketContent.style.display = 'none';
       bracketEmpty.style.display = 'block';
       return;
     }
+
+    const quarterfinalPairings = [
+      {
+        matchName: 'A1 vs D2',
+        first: allStandings['A'][0],  // A winner
+        second: allStandings['D'][1]   // D runner-up
+      },
+      {
+        matchName: 'A2 vs D1',
+        first: allStandings['A'][1],   // A runner-up
+        second: allStandings['D'][0]   // D winner
+      },
+      {
+        matchName: 'C1 vs B2',
+        first: allStandings['C'][0],   // C winner
+        second: allStandings['B'][1]   // B runner-up
+      },
+      {
+        matchName: 'C2 vs B1',
+        first: allStandings['C'][1],   // C runner-up
+        second: allStandings['B'][0]   // B winner
+      }
+    ];
 
     let html = `
       <div style="display:flex; justify-content:space-between; gap:20px; position:relative;">
@@ -968,7 +981,7 @@ class ParticipantManager {
       html += `
         <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
           <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); display:flex; gap:8px; font-size:11px; color:var(--muted); letter-spacing:1px;">
-            <span style="color:${color1};">🥇</span> Group ${pairing.group}
+            <span>QF${idx + 1}</span> <span style="color:var(--gold);">•</span> <span>${pairing.matchName}</span>
           </div>
           <div style="padding:12px;">
             <div style="padding:8px 0; color:${color1}; font-weight:600; font-size:13px; margin-bottom:8px;">${pairing.first.name}</div>
