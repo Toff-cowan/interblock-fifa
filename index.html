@@ -1123,88 +1123,13 @@ class ParticipantManager {
 
 
         <!-- FINAL -->
-        <div style="flex:1; min-width:200px;">
+        <div style="flex:0.8; min-width:150px;">
           <div style="font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; text-align:center;">Final</div>
-          <div style="display:flex; flex-direction:column; justify-content:center; gap:16px; min-height:500px;">
-            ${
-              (() => {
-                // Determine SF winners
-                const sf1Winner = sf1Match && sf1Match.player1Score > sf1Match.player2Score ? sf1P1 : sf1P2;
-                const sf2Winner = sf2Match && sf2Match.player1Score > sf2Match.player2Score ? sf2P1 : sf2P2;
-                
-                // Create/get Final match
-                let finalMatch = this.matches.find(m => m.id === 'final');
-                if (!finalMatch && sf1Winner && sf2Winner) {
-                  // Determine who is Lamar and set the 3-0 score accordingly
-                  let p1Score = 0, p2Score = 0;
-                  if (sf1Winner.name === 'Lamar Haye') {
-                    p1Score = 3;  // Lamar wins
-                    p2Score = 0;
-                  } else if (sf2Winner.name === 'Lamar Haye') {
-                    p1Score = 0;  // sf1Winner (Clinton)
-                    p2Score = 3;  // Lamar wins
-                  }
-                  
-                  finalMatch = {
-                    id: 'final',
-                    group: 'FINAL',
-                    player1Id: sf1Winner.id,
-                    player2Id: sf2Winner.id,
-                    player1Score: p1Score,
-                    player2Score: p2Score
-                  };
-                  this.matches.push(finalMatch);
-                }
-                
-                // Ensure Lamar's score is 3 and opponent is 0
-                if (finalMatch) {
-                  const p1 = this.participants.find(p => p.id === finalMatch.player1Id);
-                  const p2 = this.participants.find(p => p.id === finalMatch.player2Id);
-                  
-                  if (p1.name === 'Lamar Haye') {
-                    finalMatch.player1Score = 3;
-                    finalMatch.player2Score = 0;
-                  } else if (p2.name === 'Lamar Haye') {
-                    finalMatch.player1Score = 0;
-                    finalMatch.player2Score = 3;
-                  }
-                }
-                
-                const finalP1 = this.participants.find(p => p.id === finalMatch?.player1Id);
-                const finalP2 = this.participants.find(p => p.id === finalMatch?.player2Id);
-                const finalP1Color = finalP1 ? this.getBlockColor(finalP1.block) : 'var(--muted)';
-                const finalP2Color = finalP2 ? this.getBlockColor(finalP2.block) : 'var(--muted)';
-                
-                const champion = finalMatch && finalMatch.player1Score > finalMatch.player2Score ? finalP1 : finalP2;
-                const champBlock = champion ? champion.block.toUpperCase() : '';
-                
-                return finalMatch && finalP1 && finalP2 ? \`
-                  <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-                    <div style="padding:8px 12px; background:var(--surface3); border-bottom:1px solid var(--border); font-size:11px; color:var(--muted); letter-spacing:1px; text-align:center;">CHAMPIONSHIP FINAL</div>
-                    <div style="padding:12px;">
-                      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                        <div style="flex:1; color:\${finalP1Color}; font-weight:600; font-size:13px;">\${finalP1.name}</div>
-                        <input type="number" min="0" value="\${finalMatch.player1Score}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
-                      </div>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div style="flex:1; color:\${finalP2Color}; font-weight:600; font-size:13px;">\${finalP2.name}</div>
-                        <input type="number" min="0" value="\${finalMatch.player2Score}" disabled style="width:40px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:4px; color:var(--text); text-align:center; font-weight:600; opacity:0.6; cursor:not-allowed;">
-                      </div>
-                    </div>
-                  </div>
-                  <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:16px; text-align:center;">
-                    <div style="font-size:40px; margin-bottom:8px; filter:drop-shadow(0 0 10px rgba(240,192,64,0.6));">👑</div>
-                    <div style="font-family:'Bebas Neue',sans-serif; color:var(--gold); font-weight:600; font-size:16px; letter-spacing:2px;">\${champion.name}</div>
-                    <div style="font-family:'Bebas Neue',sans-serif; color:var(--gold); font-weight:600; font-size:13px; letter-spacing:1px; margin-top:6px;">\${champBlock} CHAMPION</div>
-                  </div>
-                \` : \`
-                  <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:24px; text-align:center; color:var(--muted);">
-                    <div style="font-size:32px; margin-bottom:12px;">🏆</div>
-                    <div style="font-family:'Bebas Neue',sans-serif; color:var(--gold); font-weight:600;">Champion</div>
-                  </div>
-                \`;
-              })()
-            }
+          <div style="display:flex; align-items:center; justify-content:center; height:550px;">
+            <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:24px; text-align:center; color:var(--muted); min-width:150px;">
+              <div style="font-size:32px; margin-bottom:12px;">🏆</div>
+              <div style="font-family:'Bebas Neue',sans-serif; color:var(--gold); font-weight:600;">Champion</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1213,7 +1138,6 @@ class ParticipantManager {
     bracketContent.innerHTML = html;
     bracketContent.style.display = 'block';
     bracketEmpty.style.display = 'none';
-    this.saveMatches();
   }
 
   render() {
