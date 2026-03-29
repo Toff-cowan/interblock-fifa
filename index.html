@@ -247,6 +247,19 @@ body::before {
   box-shadow:0 8px 32px rgba(240,192,64,0.35);
 }
 .admin-fab:hover { filter:brightness(1.08); }
+
+.export-fab {
+  position:fixed; bottom:24px; right:160px; z-index:100;
+  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:2px;
+  padding:14px 22px; border-radius:999px; border:1px solid var(--border-bright); cursor:pointer;
+  background:var(--surface2); color:var(--text);
+  box-shadow:0 8px 24px rgba(0,0,0,0.28);
+}
+.export-fab:hover { filter:brightness(1.08); }
+@media(max-width:700px){
+  .export-fab { right:24px; bottom:86px; }
+}
+
 .admin-backdrop { display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.65); backdrop-filter:blur(4px); }
 .admin-backdrop.open { display:block; }
 .admin-panel {
@@ -809,6 +822,7 @@ body::before {
 
 </div>
 
+<button type="button" class="export-fab" id="downloadCsvBtn" aria-label="Download tournament data CSV">Download CSV</button>
 <button type="button" class="admin-fab" id="adminFab" aria-label="Open admin panel">Admin</button>
 <div class="admin-backdrop" id="adminBackdrop" aria-hidden="true"></div>
 <div class="admin-panel" id="adminPanel" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
@@ -1104,6 +1118,82 @@ body::before {
     return normalizeState(base);
   }
 
+
+  function toCsvValue(value) {
+    var s = value == null ? '' : String(value);
+    if (/[",
+]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function buildCsvFromState(state) {
+    var lines = [];
+    lines.push([
+      'section','key','group','block','name','status','matchId','matchLabel','homeLabel','awayLabel','homeScore','awayScore','currentStage','notes','pointsOnca','pointsGenus','pointsPardus','pointsLynx'
+    ].join(','));
+
+    Object.keys(state.participants).forEach(function (key) {
+      var p = state.participants[key] || {};
+      var parts = key.split('_');
+      lines.push([
+        'participant',
+        key,
+        parts[0] || '',
+        parts[1] || '',
+        p.name || '',
+        p.status || '',
+        '', '', '', '', '', '', '', '', '', '', '', ''
+      ].map(toCsvValue).join(','));
+    });
+
+    state.matches.forEach(function (m) {
+      lines.push([
+        'match',
+        '', '', '', '', '',
+        m.id || '',
+        m.label || '',
+        m.homeLabel || '',
+        m.awayLabel || '',
+        m.homeScore || '',
+        m.awayScore || '',
+        '', '', '', '', '', ''
+      ].map(toCsvValue).join(','));
+    });
+
+    lines.push([
+      'progression',
+      '', '', '', '', '', '', '', '', '', '', '',
+      state.progression.currentStage || '',
+      state.progression.notes || '',
+      state.progression.blockPoints.onca || 0,
+      state.progression.blockPoints.genus || 0,
+      state.progression.blockPoints.pardus || 0,
+      state.progression.blockPoints.lynx || 0
+    ].map(toCsvValue).join(','));
+
+    return lines.join('
+');
+  }
+
+  function downloadCurrentStateCsv() {
+    var state = lastState ? normalizeState(lastState) : collectStateFromEditor();
+    var csv = buildCsvFromState(state);
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    var now = new Date();
+    var stamp = now.getFullYear().toString() +
+      String(now.getMonth() + 1).padStart(2, '0') +
+      String(now.getDate()).padStart(2, '0') + '_' +
+      String(now.getHours()).padStart(2, '0') +
+      String(now.getMinutes()).padStart(2, '0');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'tournament_data_' + stamp + '.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(function () { URL.revokeObjectURL(link.href); }, 250);
+  }
+
   function openPanel() {
     document.getElementById('adminBackdrop').classList.add('open');
     document.getElementById('adminPanel').classList.add('open');
@@ -1115,6 +1205,7 @@ body::before {
     document.getElementById('adminPanel').classList.remove('open');
   }
 
+  document.getElementById('downloadCsvBtn').addEventListener('click', downloadCurrentStateCsv);
   document.getElementById('adminFab').addEventListener('click', openPanel);
   document.getElementById('adminClose').addEventListener('click', closePanel);
   document.getElementById('adminBackdrop').addEventListener('click', closePanel);
